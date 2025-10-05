@@ -21,8 +21,12 @@ class User(Base):
 class Hazard(Base):
     __tablename__ = "hazards"
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    title = Column(String, nullable=False)
+    problem = Column(String, nullable=False)  # 👈 замість title
     description = Column(String, nullable=True)
+    delay_sec = Column(Integer, nullable=True)
+    vehicle_id = Column(String, nullable=True)
+    trip_id = Column(String, nullable=True)
+    route_id = Column(String, nullable=True)
     source = Column(String, default="user")
     reporter_user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True)
     status = Column(String, default="new")
@@ -33,3 +37,4 @@ class Hazard(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now(), server_default=func.now())
     valid_until = Column(DateTime, nullable=True)
+

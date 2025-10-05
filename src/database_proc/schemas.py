@@ -33,14 +33,24 @@ class UserOut(UserBase):
     }
 
 class HazardBase(BaseModel):
-    title: str
+    problem: str
     description: Optional[str] = None
+    delay_sec: Optional[int] = None
+    vehicle_id: Optional[str] = None
+    trip_id: Optional[str] = None
+    route_id: Optional[str] = None
     source: str = "user"
     reporter_user_id: Optional[UUID] = None
     severity_num: int = 0
     confidence: float = 0.5
-    latitude: float
-    longitude: float
+    latitude: float = Field(..., alias="lat")
+    longitude: float = Field(..., alias="lon")
+
+    model_config = {
+        "populate_by_name": True,  # 👈 дозволяє фронту слати lat/lon
+        "from_attributes": True
+    }
+
 
 class HazardCreate(HazardBase):
     pass
@@ -57,15 +67,23 @@ class HazardOut(HazardBase):
     }
 
 class HazardUpdate(BaseModel):
-    title: Optional[str] = None
+    problem: Optional[str] = None
     description: Optional[str] = None
+    delay_sec: Optional[int] = None
+    vehicle_id: Optional[str] = None
+    trip_id: Optional[str] = None
+    route_id: Optional[str] = None
     source: Optional[str] = None
     severity_num: Optional[int] = None
     confidence: Optional[float] = None
-    latitude: Optional[float] = None
-    longitude: Optional[float] = None
+    latitude: Optional[float] = Field(None, alias="lat")
+    longitude: Optional[float] = Field(None, alias="lon")
     status: Optional[str] = None
     valid_until: Optional[str] = None
+
+    model_config = {
+        "populate_by_name": True
+    }
 
 
 class Point(BaseModel):
