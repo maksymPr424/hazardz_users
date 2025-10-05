@@ -1,0 +1,1 @@
+WFS_URL = "https://ahocevar.com/geoserver/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=topp:states&outputFormat=application/json"
